@@ -1,0 +1,59 @@
+   **MOTION SENSOR LIGHT**
+	Name : Samruddhi Shankar Gurav 
+     College : DKTE,ICHALKARANJI.                                                               Duration:2 week
+     Dept : Electronics & Telecommunication 
+     Year: 2025-26
+
+1. Project Objective
+The primary objective of this project is to design and implement an energy-efficient, hardware-driven motion-activated lighting system that operates without requiring microcontrollers or software programming.
+•	Automated Human Presence Detection: To automatically activate an electric light source upon detecting human thermal movement within a 3 to 7-meter range.
+•	Hardware-Only Switching Logic: To eliminate microcontrollers (such as Arduino or ESP) by using discrete analog components (BC547 NPN Transistor) for low-cost electronic switching.
+•	Energy Conservation: To significantly reduce electrical power waste by ensuring lighting loads operate only when active movement is detected and shut off automatically after a set delay.
+•	Practical Versatility: To develop a modular foundation that can be easily scaled to drive higher power AC loads via relay modules or trigger security alarms.
+
+2. Block Diagram
+ 
+                   (image in folder)
+
+3. Working of Circuit Diagram  (image in folder)
+The circuit operates as a non-programmable, hardware-driven automatic switch. It uses the infrared output logic of an HC-SR501 motion sensor to control the switching state of a BC547 NPN bipolar junction transistor (BJT).
+•	Standby State (No Motion): The PIR sensor constantly scans its detection field. When no human motion is detected, the output pin (OUT) remains at 0V (LOW). Without base voltage, zero current flows into the base of the BC547 transistor. The transistor stays in the Cut-off state (acting as an open switch), and the LED load remains OFF.
+•	Trigger Phase (Motion Detected): When a warm body enters the detection zone (3 to 7 meters), the PIR sensor detects the change in infrared radiation and immediately drives its OUT pin HIGH to 3.3V.
+•	Transistor Saturation: The 3.3V logic signal passes through the 100 Ω base resistor (R1) into the base terminal of the BC547 transistor. This base current (I_B) drives the transistor out of cut-off and into Saturation mode (acting as a closed switch with V_CE ≈ 0.2V).
+•	Load Conduction: With the transistor saturated, a path to ground is completed. Current flows from the +9V supply through the 330 Ω current-limiting resistor (R2), through the LED, and down to GND via the collector-emitter junction, turning the LED ON.
+•	Auto-Reset Delay: Once motion ceases, the internal timer of the HC-SR501 holds the OUT signal HIGH for a preset delay (adjustable via potentiometer). After the delay elapses, OUT returns to 0V, turning off base current and switching the LED OFF.
+
+4. Hardware Components
+Component	Specification / Rating	Role in Circuit
+HC-SR501 PIR Sensor	Operating: 4.5V–12V DC
+Output: 3.3V High / 0V Low
+Range: 3m–7m	Senses infrared thermal movement and sends logic HIGH output signal.
+BC547 NPN Transistor	V_CEO = 45V, I_C = 100mA
+Package: TO-92	Acts as an electronic solid-state switch triggered by PIR signal.
+Resistor R1 (Base)	100 Ω (1/4 Watt)	Limits base current (I_B) to protect transistor and PIR output pin.
+Resistor R2 (LED)	330 Ω (1/4 Watt)	Limits forward current through LED to prevent burning out.
+LED / Power Supply	5mm Standard LED
+9V DC Battery / Adapter	Serves as light output indicator and main circuit DC power source.
+
+5. System Algorithm & Logic Flow
+Sequential Operational Logic Flow:
+•	Step 1 (Initialize): Power ON system (+9V DC). Allow 30–60 seconds warm-up time for PIR sensor calibration.
+•	Step 2 (Sense): Monitor infrared radiation changes continuously in the coverage area.
+•	Step 3 (Decision): If IR change > threshold, set PIR OUT = 3.3V (HIGH). Else, keep PIR OUT = 0V (LOW).
+•	Step 4 (Switch): If PIR OUT = HIGH -> Base Current flows -> Transistor Saturates -> LED turns ON.
+•	Step 5 (Hold & Reset): Maintain LED ON state for active delay period. When motion stops and timer s
+
+6. Applications, Advantages & Limitations
+Key Advantages:
+•	Zero Microcontroller Cost: Highly economical solution requiring no programming or complex microchip hardware.
+•	Energy Efficient: Power is consumed by the main load only when human presence is detected.
+•	Instant Response: Transistor saturation switching provides immediate turn-ON capability.
+•	Adjustable Timing & Range: Onboard PIR potentiometers allow tuning delay duration and distance.
+Practical Applications:
+•	Automatic Lighting: Staircases, corridors, washrooms, and garage entryways.
+•	Intruder Alarm System: Circuit can drive a 9V buzzer or relay module instead of an LED.
+•	Smart Home Automation: Automated night lamp switching to conserve household energy.
+Circuit Limitations:
+•	Line-of-Sight Restriction: PIR sensor cannot detect movement through solid walls or glass.
+•	Thermal Sensitivity: High ambient outdoor temperatures (near 37°C) reduce detection accuracy.
+•	Current Output Limit: BC547 transistor supports up to 100mA collector current; driving AC loads requires an additional relay module.
